@@ -20,7 +20,7 @@ It is necessary to specify the namespace to which deployments will be made.
 
 As this is the first time the command has been run, the container image will be built, pushed to the image registry and deployed.
 
-Once the build and deployment has completed, click on the **Application** tab to view the web application.
+Once the build and deployment has completed, click on the **Application** tab to view the web application. Press the dashboard tab reload icon top right if necessary to refresh the view.
 
 Kill the watch for pods in the session namespace.
 

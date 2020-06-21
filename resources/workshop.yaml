@@ -24,7 +24,7 @@ spec:
         enabled: true
     dashboards:
     - name: Application
-      url: "$(ingress_protocol)://hello-$(session_namespace).$(ingress_domain)/"
+      url: "http://hello-$(session_namespace).$(ingress_domain)/"
     objects:
     - apiVersion: v1
       kind: ServiceAccount
