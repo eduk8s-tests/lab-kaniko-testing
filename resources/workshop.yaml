@@ -1,21 +1,84 @@
 apiVersion: training.eduk8s.io/v1alpha2
 kind: Workshop
 metadata:
-  name: lab-markdown-sample
+  name: lab-kaniko-testing
 spec:
-  title: Markdown Sample
-  description: A sample workshop using Markdown
-  vendor: eduk8s.io
-  difficulty: beginner
-  duration: 15m
-  url: https://github.com/eduk8s/lab-markdown-sample
+  title: Kaniko Testing
+  description: A workshop to test use of kaniko for builds
+  url: https://github.com/eduk8s-tests/lab-kaniko-testing
   content:
-    #image: quay.io/eduk8s/lab-markdown-sample:master
-    files: github.com/eduk8s/lab-markdown-sample
+    image: quay.io/eduk8s/base-environment:200620.064301.936a3f1
+    #files: github.com/eduk8s-tests/lab-kaniko-testing
   session:
-    budget: small
+    role: edit
+    budget: medium
     applications:
+      terminal:
+        enabled: true
+        layout: split
       console:
         enabled: true
       editor:
         enabled: true
+      registry:
+        enabled: true
+    objects:
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: kaniko
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        name: kaniko
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: $(workshop_namespace)-kaniko
+      subjects:
+      - kind: ServiceAccount
+        namespace: $(session_namespace)
+        name: kaniko
+  environment:
+    objects:
+    - apiVersion: policy/v1beta1
+      kind: PodSecurityPolicy
+      metadata:
+        name: aa-$(workshop_namespace)-kaniko
+      spec:
+        privileged: false
+        allowPrivilegeEscalation: false
+        #requiredDropCapabilities:
+        #- ALL
+        hostIPC: false
+        hostNetwork: false
+        hostPID: false
+        hostPorts: []
+        runAsUser:
+          rule: RunAsAny
+        seLinux:
+          rule: RunAsAny
+        fsGroup:
+          rule: RunAsAny
+        supplementalGroups:
+          rule: RunAsAny
+        volumes:
+        - configMap
+        - downwardAPI
+        - emptyDir
+        - persistentVolumeClaim
+        - projected
+        - secret
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      metadata:
+        name: $(workshop_namespace)-kaniko
+      rules:
+      - apiGroups:
+        - policy
+        resources:
+        - podsecuritypolicies
+        verbs:
+        - use
+        resourceNames:
+        - aa-$(workshop_namespace)-kaniko
