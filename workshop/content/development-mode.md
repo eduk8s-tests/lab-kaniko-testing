@@ -7,7 +7,7 @@ kubectl create secret generic registry-credentials --from-file=.dockerconfigjson
 Setup a watch for pods in the session namespace.
 
 ```execute-1
-watch kubcetl get pods
+watch kubectl get pods
 ```
 
 Run ``skaffold`` in development mode.

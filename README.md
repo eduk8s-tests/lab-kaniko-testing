@@ -1,4 +1,4 @@
-LAB - Markdown Sample
-=====================
+LAB - Kaniko Testing
+====================
 
-Sample workshop content using Markdown formatting for pages.
+A workshop to test use of kaniko for builds.

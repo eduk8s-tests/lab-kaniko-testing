@@ -1,6 +1,5 @@
-name: Markdown Sample
+name: Kaniko Testing
 
 modules:
     activate:
-    - workshop-overview
-    - workshop-summary
+    - development-mode

@@ -22,12 +22,9 @@ spec:
         enabled: true
       registry:
         enabled: true
-    ingresses:
-    - name: application
-      port: 8080
     dashboards:
     - name: Application
-      url: "$(ingress_protocol)://$(session_namespace)-application.$(ingress_domain)/"
+      url: "$(ingress_protocol)://hello-$(session_namespace).$(ingress_domain)/"
     objects:
     - apiVersion: v1
       kind: ServiceAccount
