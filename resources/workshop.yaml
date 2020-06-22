@@ -48,8 +48,13 @@ spec:
       spec:
         privileged: false
         allowPrivilegeEscalation: false
-        #requiredDropCapabilities:
-        #- ALL
+        defaultAddCapabilities:
+        - CHOWN
+        - DAC_OVERRIDE
+        - FOWNER
+        - SETFCAP
+        - SETGID
+        - SETUID
         hostIPC: false
         hostNetwork: false
         hostPID: false
